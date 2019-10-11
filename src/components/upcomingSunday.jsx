@@ -10,8 +10,9 @@ class UpcomingSunday extends Component {
   }
 
   async populateRoster() {
-    const { data: roster } = await getUpcomingSunday();
-    this.setState({ roster });
+    const roster = await getUpcomingSunday();
+    console.log(roster);
+    this.setState({ roster: roster.data });
   }
 
   render() {
