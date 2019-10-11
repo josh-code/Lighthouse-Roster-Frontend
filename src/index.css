@@ -11,3 +11,15 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.fa-meh {
+  color: orange;
+}
+
+.fa-laugh {
+  color: green;
+}
+
+.fa-frown-open {
+  color: red;
+}
