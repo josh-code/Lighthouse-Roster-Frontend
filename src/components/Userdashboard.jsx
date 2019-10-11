@@ -7,7 +7,6 @@ import auth from "../services/authService";
 import { formatDate } from "./../utils/dateFormatter";
 class UserDashboard extends Component {
   state = {
-    user: { firstName: "user" },
     modal: {
       show: false,
       title: "Attention!!",
@@ -169,9 +168,11 @@ class UserDashboard extends Component {
             <div className="col-4 align-self-end">
               <h1 className="display-4 ">Dashboard</h1>
             </div>
-            <div className="col-4  align-self-end">
-              <h6 className="display-6">{this.state.user.firstName}</h6>
-            </div>
+            {this.state.user && (
+              <div className="col-4  align-self-end">
+                <h6 className="display-6">{this.state.user.firstName}</h6>
+              </div>
+            )}
           </div>
         </div>
         <div className="row m-1">
