@@ -23,14 +23,26 @@ class UserDashboard extends Component {
         }
       },
       roster: {}
-    }
+    },
+    user: {},
+    preload: "Loading..."
   };
 
   async componentDidMount() {
+    // this.getUser();
+    // const { data: rosters } = await getUserRosters(this.state.user._id);
     const user = auth.getCurrentUser();
-    const { data: rosters } = await getUserRosters(user._id);
-    this.setState({ user, rosters });
+    try {
+      const { data: rosters } = await getUserRosters(user._id);
+      this.setState({ rosters, user, loaded: true });
+    } catch (err) {
+      this.setState({ user, preload: "Not rostered for upcoming Sundays" });
+    }
   }
+
+  // getUser = () => {
+  //   this.setState({ user });
+  // };
 
   acceptRequest = async roster => {
     const rosters = [...this.state.rosters];
@@ -207,7 +219,9 @@ class UserDashboard extends Component {
               </div>
             ))}
           {!this.state.rosters && (
-            <h3 className="h4 m-4">Not rostered for upcoming Sundays</h3>
+            <div class="col-md-3 bg">
+              <div class="loader" id="loader-3"></div>
+            </div>
           )}
           <Modal show={this.state.modal.show} onHide={() => handleClose()}>
             <Modal.Header closeButton>

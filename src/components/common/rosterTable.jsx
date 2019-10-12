@@ -5,6 +5,11 @@ import { formatDate } from "./../../utils/dateFormatter";
 class RosterTable extends Component {
   render() {
     const { roster } = this.props;
+    roster.data.forEach((role, i) => {
+      if (!role.user) {
+        roster.data[i].user = { _id: "123", firstName: "" };
+      }
+    });
     return (
       <div className="card m-3">
         <div>

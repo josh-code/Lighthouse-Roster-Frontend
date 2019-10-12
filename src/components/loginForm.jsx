@@ -7,7 +7,8 @@ import Form from "./common/form";
 class LoginForm extends Form {
   state = {
     data: { email: "", password: "" },
-    errors: {}
+    errors: {},
+    loggingIn: false
   };
 
   schema = {
@@ -23,6 +24,7 @@ class LoginForm extends Form {
   doSubmit = async () => {
     try {
       const { data } = this.state;
+      this.setState({ loggingIn: true });
       await auth.login(data.email, data.password);
       const { state } = this.props.location;
       window.location = state ? state.from.pathname : "/";
@@ -30,8 +32,9 @@ class LoginForm extends Form {
       if (ex.response && ex.response.status === 400) {
         const errors = { ...this.state.errors };
         errors.email = ex.response.data;
-        this.setState({ errors });
+        this.setState({ errors, loggingIn: false });
       }
+      this.setState({ loggingIn: false });
     }
   };
 
@@ -41,11 +44,17 @@ class LoginForm extends Form {
     return (
       <div className="m-3">
         <h1 className="display-3">LoginForm</h1>
-        <form onSubmit={this.handleSubmit}>
-          {this.renderInput("email", "Email")}
-          {this.renderInput("password", "Password", "password")}
-          {this.renderButton("Login")}
-        </form>
+        {this.state.loggingIn ? (
+          <div className="col-md-3 bg">
+            <div className="loader" id="loader-3"></div>
+          </div>
+        ) : (
+          <form onSubmit={this.handleSubmit}>
+            {this.renderInput("email", "Email")}
+            {this.renderInput("password", "Password", "password")}
+            {this.renderButton("Login")}
+          </form>
+        )}
       </div>
     );
   }

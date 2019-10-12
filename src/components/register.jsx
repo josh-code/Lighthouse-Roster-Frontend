@@ -7,7 +7,8 @@ import auth from "../services/authService";
 class Register extends Form {
   state = {
     data: { email: "", password: "", firstName: "", lastName: "" },
-    errors: {}
+    errors: {},
+    registering: false
   };
 
   schema = {
@@ -38,18 +39,18 @@ class Register extends Form {
 
   doSubmit = async () => {
     try {
+      this.setState({ registering: true });
       const response = await userService.register(this.state.data);
       console.log(response.headers["x-auth-token"]);
       auth.loginWithJwt(response.headers["x-auth-token"]);
-
       window.location = "/login";
-      console.log(this.state.data);
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
         const errors = { ...this.state.errors };
         errors.username = ex.response.data;
-        this.setState({ errors });
+        this.setState({ errors, registering: false });
       }
+      this.setState({ registering: false });
     }
   };
 
@@ -57,15 +58,21 @@ class Register extends Form {
     return (
       <div>
         <h1 className="display-1">Register</h1>
-        <form onSubmit={this.handleSubmit} className="m-3">
-          {this.renderInput("firstName", "FirstName")}
-          {this.renderInput("lastName", "lastName")}
-          {this.renderInput("phoneNo", "PhoneNo")}
-          {this.renderInput("email", "Email")}
-          {this.renderInput("password", "Password", "password")}
-          {this.renderDatePicker("dob", "dateOfBirth")}
-          {this.renderButton("Register")}
-        </form>
+        {!this.state.registering ? (
+          <form onSubmit={this.handleSubmit} className="m-3">
+            {this.renderInput("firstName", "First name")}
+            {this.renderInput("lastName", "Last name")}
+            {this.renderInput("phoneNo", "Phone No")}
+            {this.renderInput("email", "Email")}
+            {this.renderInput("password", "Password", "password")}
+            {this.renderDatePicker("dob", "Date of birth")}
+            {this.renderButton("Register")}
+          </form>
+        ) : (
+          <div className="col-md-3 bg">
+            <div className="loader" id="loader-3"></div>
+          </div>
+        )}
       </div>
     );
   }
