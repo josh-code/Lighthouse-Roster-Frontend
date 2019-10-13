@@ -36,7 +36,12 @@ class UserDashboard extends Component {
       const { data: rosters } = await getUserRosters(user._id);
       this.setState({ rosters, user, loaded: true });
     } catch (err) {
-      this.setState({ user, preload: "Not rostered for upcoming Sundays" });
+      console.log("jo");
+      this.setState({
+        user,
+        preload: "Not rostered for upcoming Sundays",
+        loaded: true
+      });
     }
   }
 
@@ -218,10 +223,15 @@ class UserDashboard extends Component {
                 </div>
               </div>
             ))}
-          {!this.state.rosters && (
-            <div class="col-md-3 bg">
-              <div class="loader" id="loader-3"></div>
+          {!this.state.loaded && (
+            <div className="col-md-3 bg">
+              <div className="loader" id="loader-3"></div>
             </div>
+          )}
+          {this.state.loaded && !this.state.rosters && (
+            <h3 className="h4 m-4">
+              Roster for upcoming Sunday will be up shortly
+            </h3>
           )}
           <Modal show={this.state.modal.show} onHide={() => handleClose()}>
             <Modal.Header closeButton>

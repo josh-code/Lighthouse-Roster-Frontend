@@ -44,8 +44,8 @@ class UpcomingSunday extends Component {
           </h3>
         )}
         {!this.state.loaded && (
-          <div class="col-md-3 bg">
-            <div class="loader" id="loader-3"></div>
+          <div className="col-md-3 bg">
+            <div className="loader" id="loader-3"></div>
           </div>
         )}
       </div>
