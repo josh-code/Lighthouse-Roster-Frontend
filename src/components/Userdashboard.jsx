@@ -50,6 +50,7 @@ class UserDashboard extends Component {
   // };
 
   acceptRequest = async roster => {
+    this.setState({ modal });
     const rosters = [...this.state.rosters];
     const modal = { ...this.state.modal };
     modal.show = false;
@@ -59,10 +60,8 @@ class UserDashboard extends Component {
     rosters[index].role.status = "accepted";
     try {
       let result = await updateUserRoster(this.state.user._id, rosters[index]);
-      this.setState({ rosters, modal });
-    } catch (error) {
-      this.setState({ modal });
-    }
+      this.setState({ rosters });
+    } catch (error) {}
   };
 
   rejectRequest = async roster => {
