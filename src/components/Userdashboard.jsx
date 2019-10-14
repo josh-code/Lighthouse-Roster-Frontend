@@ -50,10 +50,10 @@ class UserDashboard extends Component {
   // };
 
   acceptRequest = async roster => {
-    this.setState({ modal });
     const rosters = [...this.state.rosters];
     const modal = { ...this.state.modal };
     modal.show = false;
+    this.setState({ modal });
     const index = rosters.indexOf(roster);
     console.log(rosters, index);
     rosters[index] = { ...rosters[index] };
@@ -68,14 +68,14 @@ class UserDashboard extends Component {
     const rosters = [...this.state.rosters];
     const modal = { ...this.state.modal };
     modal.show = false;
+    this.setState({ modal });
     const index = rosters.indexOf(roster);
     rosters[index] = { ...rosters[index] };
     rosters[index].role.status = "declined";
-    let result = await updateUserRoster(this.state.user._id, rosters[index]);
-    if (!result) {
-      rosters[index].role.status = "pending";
-    }
-    this.setState({ rosters, modal });
+    try {
+      let result = await updateUserRoster(this.state.user._id, rosters[index]);
+      this.setState({ rosters });
+    } catch (error) {}
   };
 
   openModal = (selection, roster) => {
