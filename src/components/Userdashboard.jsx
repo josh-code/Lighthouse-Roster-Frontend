@@ -57,11 +57,12 @@ class UserDashboard extends Component {
     console.log(rosters, index);
     rosters[index] = { ...rosters[index] };
     rosters[index].role.status = "accepted";
-    let result = await updateUserRoster(this.state.user._id, rosters[index]);
-    if (!result) {
-      rosters[index].role.status = "pending";
+    try {
+      let result = await updateUserRoster(this.state.user._id, rosters[index]);
+      this.setState({ rosters, modal });
+    } catch (error) {
+      this.setState({ modal });
     }
-    this.setState({ rosters, modal });
   };
 
   rejectRequest = async roster => {
@@ -180,10 +181,10 @@ class UserDashboard extends Component {
     // const { data } = this.state;
     return (
       <div>
-        <div className="container  m-2">
+        <div className="container">
           <div className="row justify-content-between">
-            <div className="col-4 align-self-end">
-              <h1 className="display-4 ">Dashboard</h1>
+            <div className="col-4">
+              <h1 className="display-4">Dashboard</h1>
             </div>
             {this.state.user && (
               <div className="col-4  align-self-end">

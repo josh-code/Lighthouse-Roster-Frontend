@@ -48,7 +48,7 @@ class UpdateRosterById extends Component {
     } else {
       roster.data[index].status = "pending";
     }
-    roster.data[index].user = person;
+    roster.data[index].user = person.firstName === "blank" ? {} : person;
     this.setState({ roster });
     console.log(this.state.roster);
     console.log(this.state.originalRosterStatus);

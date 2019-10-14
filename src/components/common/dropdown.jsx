@@ -42,6 +42,12 @@ class Dropdown extends Component {
   };
 
   onChange = (event, { newValue }) => {
+    if (!newValue) {
+      return this.setState({
+        value: newValue,
+        temp: newValue
+      });
+    }
     this.setState({
       value: newValue,
       temp: newValue

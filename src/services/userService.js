@@ -34,7 +34,12 @@ export async function register(user) {
 }
 
 export function filterByRole(users, role) {
-  return users.filter(user =>
+  let users1 = [{ firstName: "blank", _id: "0", lastName: "_" }];
+  let users2 = users.filter(user =>
     _.indexOf(user.roles, role) >= 0 ? true : false
   );
+  users2.forEach(user => {
+    users1.push(user);
+  });
+  return users1;
 }

@@ -79,7 +79,7 @@ class CreateRoster extends Component {
 
   addToRoster = (person, index) => {
     let roster = { ...this.state.roster };
-    roster.data[index].user = person;
+    roster.data[index].user = person.firstName === "blank" ? {} : person;
     console.log(roster);
     this.setState({ roster });
   };
