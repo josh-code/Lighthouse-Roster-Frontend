@@ -11,7 +11,7 @@
     "joi-objectid": "^3.0.1",
     "jquery": "^3.4.1",
     "jwt-decode": "^2.2.0",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "popper.js": "^1.15.0",
     "react": "^16.8.6",
     "react-autosuggest": "^9.4.3",
